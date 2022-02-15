@@ -1,38 +1,84 @@
-.App {
+html {
+  /* background-color: #fd9c78; */
+  background-image: url("./background.jpg");
+  background-size: cover;
+}
+
+body {
+  font-family: "Roboto Mono", monospace;
+}
+
+.center {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.blog-logo {
+  margin: 20px 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.container {
+  width: 90%;
+  margin: 30px auto;
+  background-color: #fff;
+  padding: 50px;
+  border-radius: 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* index */
+.box {
+  background-color: hsl(48, 100%, 96%);
+}
+
+.field.is-grouped {
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
   align-items: center;
+}
+
+.fav-button {
+  background-color: transparent;
+  border: none;
+}
+
+ion-icon {
+  color: #ff5e00;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* add-edit-delete-article */
+.add-edit-button,
+.delete-button,
+.submit-comment-button {
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.add-edit-button {
+  margin-bottom: 30px;
+}
+
+.delete-button,
+.submit-comment-button {
+  margin-top: 30px;
+}
+
+/* view-article */
+
+/* 404 */
+.not-found {
+  height: 70vh;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+/* end */
+footer {
+  background-color: #fff;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+footer a {
+  display: block;
+  text-align: center;
 }
