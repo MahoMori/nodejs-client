@@ -1,13 +1,54 @@
+import { useCallback, useContext, useEffect } from "react";
+
 import "./App.css";
 
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import AuthPage from "./pages/AuthPage";
+import Test from "./pages/Test";
+
+import { UserContext } from "./context/UserContext";
 
 function App() {
+  const [userContext, setUserContext] = useContext(UserContext);
+
+  const verifyUser = useCallback(() => {
+    fetch(process.env.REACT_APP_BACKEND_ENDPOINT + "users/refreshtoken", {
+      method: "POST",
+      credentials: "include",
+      header: { "Content-Type": "application/json" },
+    }).then(async (res) => {
+      if (res.ok) {
+        const data = await res.json();
+        setUserContext((prev) => ({ ...prev, token: data.token }));
+      } else {
+        setUserContext((prev) => ({ ...prev, token: null }));
+      }
+
+      // check every 5 min
+      setTimeout(verifyUser, 5 * 30 * 1000);
+    });
+  }, [setUserContext]);
+
+  useEffect(() => verifyUser(), [verifyUser]);
+
   return (
     <div className="App">
-      <Login />
-      <Signup />
+      <nav className="center blog-logo">
+        <h1 className="title is-1">Blog</h1>
+      </nav>
+      {userContext.token === null ? (
+        <AuthPage />
+      ) : userContext.token ? (
+        <Test />
+      ) : (
+        // <div>test</div>
+        <div>Loading...</div>
+      )}
+
+      <footer>
+        <a href="https://www.freepik.com/vectors/background">
+          Background vector created by rawpixel.com - www.freepik.com
+        </a>
+      </footer>
     </div>
   );
 }
