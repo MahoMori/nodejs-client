@@ -62,7 +62,10 @@ const Home = ({ token }) => {
   return (
     <section>
       <div className="center">
-        <a href="/add-article" className="button is-primary is-light">
+        <a
+          href="/add-article"
+          className="button is-primary is-light"
+        >
           + Add New
         </a>
       </div>

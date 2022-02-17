@@ -21,6 +21,12 @@ body {
   margin: 20px 0;
 }
 
+.login-logout-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
 .container {
   width: 90%;
   margin: 30px auto;

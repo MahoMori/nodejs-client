@@ -8,6 +8,8 @@ const ViewArticle = () => {
   const [articleContext, setArticleContext] = useContext(ArticleContext);
   const [loading, setLoading] = useState(false);
 
+  const [error, setError] = useState("");
+
   const fetchArticle = useCallback(() => {
     setLoading(true);
 
@@ -37,50 +39,53 @@ const ViewArticle = () => {
     fetchArticle();
   }, []);
 
-  const [commentName, setCommentName] = useState("");
+  // ----------- add comment -----------
+  const [name, setName] = useState("");
   const [comment, setComment] = useState("");
 
   const handleCommentSubmit = (e) => {
     e.preventDefault();
 
-    // fetch(process.env.REACT_APP_BACKEND_ENDPOINT + "users/signup", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ firstName, lastName, username: email, password }),
+    console.log("inside handlecommentsubmit");
 
-    //   // cookie
-    //   credentials: "include",
-    // })
-    //   .then(async (res) => {
-    //     // setIsSubmitting(false)
-    //     if (!res.ok) {
-    //       if (res.status === 401) {
-    //         setError("Invalid inputs");
-    //       } else if (res.status === 500) {
-    //         const data = await res.json();
-    //         if (data.message) {
-    //           setError(
-    //             data.message ||
-    //               "Something went wrong with the server. Please try again."
-    //           );
-    //         } else {
-    //           setError("Something went wrong. Please try again");
-    //         }
-    //       } else {
-    //         setError("Something went wrong. Please try again");
-    //       }
-    //     } else {
-    //       const data = await res.json();
-    //       setUserContext((prev) => ({ ...prev, token: data.token }));
-    //       console.log("signup successful");
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     // setIsSubmitting(false);
-    //     setError("Something went wrong. Please try again");
-    //   });
+    fetch(process.env.REACT_APP_BACKEND_ENDPOINT + "submit-comment", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ articleId: _id, name, comment }),
 
-    setCommentName("");
+      credentials: "include",
+    })
+      .then(async (res) => {
+        console.log("inside comment then");
+
+        if (!res.ok) {
+          console.log("inside comment not ok");
+
+          if (res.status === 401) {
+            setError("Invalid inputs");
+          } else if (res.status === 500) {
+            const data = await res.json();
+            if (data.message) {
+              setError(
+                data.message ||
+                  "Something went wrong with the server. Please try again."
+              );
+            } else {
+              setError("Something went wrong. Please try again");
+            }
+          } else {
+            setError("Something went wrong. Please try again");
+          }
+        } else {
+          console.log("inside comment ok");
+        }
+      })
+      .catch((err) => {
+        setError("Something went wrong. Please try again");
+      });
+
+    window.location.reload();
+    setName("");
     setComment("");
   };
 
@@ -107,26 +112,23 @@ const ViewArticle = () => {
 
           <div className="container">
             <div>
-              {/* <% if(article.comments.length > 0) { %>
-          <% for(let comment of article.comments) { const newComment = comment.comment.split('\r\n') %>
-            <div className="columns">
-              <div className="column is-one-fifth">
-                <p className="title is-6"><%= comment.name %></p>
-              </div>
-              <div className="column">
-                <% for(let nc of newComment) { %>
-                  <%= nc %>
-                  <br>
-                <% } %>
-              </div>
+              {articleContext.article.comments.length > 0 ? (
+                articleContext.article.comments.map((comment) => (
+                  <React.Fragment key={comment._id}>
+                    <div className="columns">
+                      <div className="column is-one-fifth">
+                        <p className="title is-6">{comment.name}</p>
+                      </div>
+                      <div className="column">{comment.comment}</div>
+                    </div>
+                    <hr />
+                  </React.Fragment>
+                ))
+              ) : (
+                <div>No Comments Yet</div>
+              )}
             </div>
-            <hr>
-          <% } %>
-        <% }else{%>
-          <div>No Comments Yet</div>
-          <hr>
-        <% } %> */}
-            </div>
+
             <div>
               <form onSubmit={handleCommentSubmit}>
                 <div className="field">
@@ -136,9 +138,9 @@ const ViewArticle = () => {
                       type="text"
                       className="input"
                       name="name"
-                      value={commentName}
+                      value={name}
                       required
-                      onChange={(e) => setCommentName(e.target.value)}
+                      onChange={(e) => setName(e.target.value)}
                     />
                   </div>
                 </div>
@@ -156,11 +158,12 @@ const ViewArticle = () => {
                   </div>
                 </div>
 
-                <input
-                  type="hidden"
-                  name="articleId"
-                  value="<%= article._id %>"
-                />
+                {error && (
+                  <p className="center">
+                    <span className="tag is-warning is-medium">{error}</span>
+                  </p>
+                )}
+
                 <button
                   type="submit"
                   className="button is-success is-light submit-comment-button"

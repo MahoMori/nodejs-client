@@ -54,11 +54,14 @@ function App() {
       <nav className="center blog-logo">
         <h1 className="title is-1">Blog</h1>
         {userContext.token === null ? (
-          <Link to="/login" className="button">
+          <Link to="/login" className="button is-dark login-logout-button">
             Log In
           </Link>
         ) : (
-          <button className="buttont" onClick={logoutHandler}>
+          <button
+            className="button is-dark login-logout-button"
+            onClick={logoutHandler}
+          >
             Log Out
           </button>
         )}
@@ -70,27 +73,14 @@ function App() {
 
         <Route path="/login" element={<AuthPage />} />
 
-        <Route path="/add-article" element={<AddEditDelete />} />
-        <Route path="/edit-delete-article/:_id" element={<AddEditDelete />} />
-
-        {/* {userContext.token === null ? (
-          <Route path="/login" element={<AuthPage />} />
-        ) : userContext.token ? (
-          <>
-            <Route path="/add-article" element={<AddEditDelete />} />
-            <Route
-              path="/edit-delete-article/:_id"
-              element={<AddEditDelete />}
-            />
-          </>
-        ) : (
-          <div className="container">
-            <HeartSpinner size={60} color="#ff7f50" loading={loading} />
-          </div>
-        )} */}
-
-        {/* <Route path="/add-article" element={<AddEditDelete />} />
-        <Route path="/edit-delete-article/:_id" element={<AddEditDelete />} /> */}
+        <Route
+          path="/add-article"
+          element={<AddEditDelete editing={false} />}
+        />
+        <Route
+          path="/edit-delete-article/:_id"
+          element={<AddEditDelete editing={true} />}
+        />
       </Routes>
 
       {/* {userContext.token === null ? (
