@@ -1,9 +1,11 @@
 import React, { useContext, useState, useCallback, useEffect } from "react";
 import { HeartSpinner } from "react-spinners-kit";
 import { Link } from "react-router-dom";
-import { ArticleContext } from "../context/ArticleContext";
 
-const Home = () => {
+import { ArticleContext } from "../context/ArticleContext";
+import { UserContext } from "../context/UserContext";
+
+const Home = ({ token }) => {
   const [articleContext, setArticleContext] = useContext(ArticleContext);
   const [loading, setLoading] = useState(false);
 
@@ -34,6 +36,29 @@ const Home = () => {
     fetchArticles();
   }, []);
 
+  // check if user is logged in
+  // const [userContext, setUserContext] = useContext(UserContext);
+
+  // const verifyUser = useCallback(() => {
+  //   fetch(process.env.REACT_APP_BACKEND_ENDPOINT + "users/refreshtoken", {
+  //     method: "POST",
+  //     credentials: "include",
+  //     header: { "Content-Type": "application/json" },
+  //   }).then(async (res) => {
+  //     if (res.ok) {
+  //       const data = await res.json();
+  //       setUserContext((prev) => ({ ...prev, token: data.token }));
+  //     } else {
+  //       setUserContext((prev) => ({ ...prev, token: null }));
+  //     }
+
+  //     // check every 5 min
+  //     setTimeout(verifyUser, 5 * 30 * 1000);
+  //   });
+  // }, [setUserContext]);
+
+  // useEffect(() => verifyUser(), [verifyUser]);
+
   return (
     <section>
       <div className="center">
@@ -46,7 +71,7 @@ const Home = () => {
         {/* <% if(articles.length > 0) { const reversed = articles.reverse() %> */}
 
         {!articleContext.articles ? (
-          <div>
+          <div className="container spinner-center">
             <HeartSpinner size={60} color="#ff7f50" loading={loading} />
           </div>
         ) : articleContext.articles === null ? (
@@ -69,7 +94,11 @@ const Home = () => {
                   Read more
                 </Link>
                 <Link
-                  to={`/edit-delete-article/${article._id}`}
+                  to={
+                    token === null
+                      ? "/login"
+                      : `/edit-delete-article/${article._id}`
+                  }
                   className="button is-light"
                 >
                   Edit

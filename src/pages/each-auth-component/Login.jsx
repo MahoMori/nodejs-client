@@ -4,14 +4,12 @@ import { UserContext } from "../../context/UserContext";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
 
   const [userContext, setUserContext] = useContext(UserContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setIsSubmitting(true)
     setError("");
 
     fetch(process.env.REACT_APP_BACKEND_ENDPOINT + "users/login", {
@@ -23,7 +21,6 @@ const Login = () => {
       credentials: "include",
     })
       .then(async (res) => {
-        // setIsSubmitting(false)
         if (!res.ok) {
           if (res.status === 401) {
             setError("Invalid inputs");
@@ -33,6 +30,9 @@ const Login = () => {
         } else {
           const data = await res.json();
           setUserContext((prev) => ({ ...prev, token: data.token }));
+          // redirect
+          // window.location.replace()
+          window.history.back();
         }
       })
       .catch((err) => {

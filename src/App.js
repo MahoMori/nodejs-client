@@ -1,5 +1,6 @@
-import { useCallback, useContext, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { useCallback, useState, useContext, useEffect } from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import { HeartSpinner } from "react-spinners-kit";
 
 import "./App.css";
 
@@ -7,8 +8,6 @@ import Home from "./pages/Home";
 import ViewArticle from "./pages/ViewArticle";
 import AddEditDelete from "./pages/AddEditDelete";
 import AuthPage from "./pages/AuthPage";
-
-import Test from "./pages/Test";
 
 import { UserContext } from "./context/UserContext";
 
@@ -35,20 +34,65 @@ function App() {
 
   useEffect(() => verifyUser(), [verifyUser]);
 
+  const logoutHandler = () => {
+    fetch(process.env.REACT_APP_BACKEND_ENDPOINT + "users/logout", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userContext.token}`,
+      },
+    }).then(async (res) => {
+      setUserContext((prev) => ({ ...prev, details: undefined, token: null }));
+
+      // redirect
+    });
+  };
+
   return (
     <div className="App">
       <nav className="center blog-logo">
         <h1 className="title is-1">Blog</h1>
+        {userContext.token === null ? (
+          <Link to="/login" className="button">
+            Log In
+          </Link>
+        ) : (
+          <button className="buttont" onClick={logoutHandler}>
+            Log Out
+          </button>
+        )}
       </nav>
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home token={userContext.token} />} />
         <Route path="/view-article/:_id" element={<ViewArticle />} />
+
+        <Route path="/login" element={<AuthPage />} />
+
         <Route path="/add-article" element={<AddEditDelete />} />
         <Route path="/edit-delete-article/:_id" element={<AddEditDelete />} />
+
+        {/* {userContext.token === null ? (
+          <Route path="/login" element={<AuthPage />} />
+        ) : userContext.token ? (
+          <>
+            <Route path="/add-article" element={<AddEditDelete />} />
+            <Route
+              path="/edit-delete-article/:_id"
+              element={<AddEditDelete />}
+            />
+          </>
+        ) : (
+          <div className="container">
+            <HeartSpinner size={60} color="#ff7f50" loading={loading} />
+          </div>
+        )} */}
+
+        {/* <Route path="/add-article" element={<AddEditDelete />} />
+        <Route path="/edit-delete-article/:_id" element={<AddEditDelete />} /> */}
       </Routes>
 
-      {/* <Home /> */}
       {/* {userContext.token === null ? (
         <AuthPage />
       ) : userContext.token ? (

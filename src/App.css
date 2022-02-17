@@ -12,6 +12,11 @@ body {
   text-align: center;
 }
 
+.spinner-center {
+  display: flex;
+  justify-content: center;
+}
+
 .blog-logo {
   margin: 20px 0;
 }

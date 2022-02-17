@@ -93,7 +93,7 @@ const ViewArticle = () => {
       </div>
 
       {!articleContext.article ? (
-        <div className="container">
+        <div className="container spinner-center">
           <HeartSpinner size={60} color="#ff7f50" loading={loading} />
         </div>
       ) : articleContext.article === null ? (
