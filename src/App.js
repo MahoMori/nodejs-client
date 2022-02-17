@@ -1,8 +1,13 @@
 import { useCallback, useContext, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
 
+import Home from "./pages/Home";
+import ViewArticle from "./pages/ViewArticle";
+import AddEditDelete from "./pages/AddEditDelete";
 import AuthPage from "./pages/AuthPage";
+
 import Test from "./pages/Test";
 
 import { UserContext } from "./context/UserContext";
@@ -35,14 +40,22 @@ function App() {
       <nav className="center blog-logo">
         <h1 className="title is-1">Blog</h1>
       </nav>
-      {userContext.token === null ? (
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/view-article/:_id" element={<ViewArticle />} />
+        <Route path="/add-article" element={<AddEditDelete />} />
+        <Route path="/edit-delete-article/:_id" element={<AddEditDelete />} />
+      </Routes>
+
+      {/* <Home /> */}
+      {/* {userContext.token === null ? (
         <AuthPage />
       ) : userContext.token ? (
         <Test />
       ) : (
-        // <div>test</div>
         <div>Loading...</div>
-      )}
+      )} */}
 
       <footer>
         <a href="https://www.freepik.com/vectors/background">
