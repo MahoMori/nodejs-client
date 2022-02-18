@@ -62,6 +62,7 @@ const Home = ({ token, setPath }) => {
                 {article.content.length > 200
                   ? article.content.slice(0, 200)
                   : article.content}
+                ...
               </div>
 
               <div className="field is-grouped">
