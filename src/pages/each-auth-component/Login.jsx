@@ -32,7 +32,10 @@ const Login = ({ path }) => {
           setUserContext((prev) => ({ ...prev, token: data.token }));
           console.log(userContext);
 
-          window.history.back();
+          // window.history.back();
+          window.location.replace(
+            "https://nodejs-giraff-blog.netlify.app/add-article"
+          );
 
           // redirect
           // if (path === "/") {
