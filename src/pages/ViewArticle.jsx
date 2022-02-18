@@ -1,6 +1,6 @@
 import React, { useContext, useState, useCallback, useEffect } from "react";
 import { HeartSpinner } from "react-spinners-kit";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ArticleContext } from "../context/ArticleContext";
 
 const ViewArticle = () => {
@@ -92,9 +92,12 @@ const ViewArticle = () => {
   return (
     <section>
       <div className="center top-button">
-        <a href="/" className="button is-warning">
+        {/* <a href="/" className="button is-warning">
           ← Go Back To Main Page
-        </a>
+        </a> */}
+        <Link to="/" className="button is-warning">
+          ← Go Back To Main Page
+        </Link>
       </div>
 
       {!articleContext.article ? (

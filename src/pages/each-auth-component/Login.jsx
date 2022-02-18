@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 
-const Login = () => {
+const Login = ({ path }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -30,13 +30,17 @@ const Login = () => {
         } else {
           const data = await res.json();
           setUserContext((prev) => ({ ...prev, token: data.token }));
+
           // redirect
+          if (path === "/") {
+            window.history.back();
+          } else {
+            window.location.replace(`http://localhost:3000/${path}`);
+          }
           // window.location.replace()
-          window.history.back();
         }
       })
       .catch((err) => {
-        // setIsSubmitting(false)
         setError("Something went wrong. Please try again");
       });
   };

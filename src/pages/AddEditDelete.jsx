@@ -1,8 +1,7 @@
 import React, { useContext, useState, useCallback, useEffect } from "react";
 import { HeartSpinner } from "react-spinners-kit";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-import { UserContext } from "../context/UserContext";
 import { ArticleContext } from "../context/ArticleContext";
 
 const AddEditDelete = ({ editing }) => {
@@ -12,6 +11,8 @@ const AddEditDelete = ({ editing }) => {
 
   const fetchArticle = useCallback(() => {
     setLoading(true);
+    setArticleContext({});
+    console.log("before fetch ", articleContext);
 
     fetch(
       process.env.REACT_APP_BACKEND_ENDPOINT + `edit-delete-article/${_id}`,
@@ -27,27 +28,37 @@ const AddEditDelete = ({ editing }) => {
 
       if (res.ok) {
         const data = await res.json();
-        setArticleContext((prev) => ({ ...prev, article: data }));
+        // setArticleContext((prev) => ({ ...prev, article: data }));
+        setArticleContext({ article: data });
+
+        console.log("res ok ", articleContext);
+
         setTitle(data.title);
         setContent(data.content);
       } else {
         if (res.status === 401) {
           window.location.reload();
         } else {
-          setArticleContext((prev) => ({ ...prev, article: null }));
+          // setArticleContext((prev) => ({ ...prev, article: null }));
+          setArticleContext({ article: null });
         }
       }
     });
   }, [setArticleContext]);
 
   useEffect(() => {
-    console.log("editing", editing);
-    console.log("article", articleContext);
+    // console.log("editing ", editing);
+    // console.log("article ", articleContext.article);
+
+    setTitle("");
+    setContent("");
 
     if (editing) {
       fetchArticle();
     } else {
-      articleContext.article = "adding mode";
+      // setArticleContext((prev) => ({ ...prev, article: "adding mode" }));
+      setArticleContext({ article: "adding mode" });
+      console.log(articleContext);
     }
   }, []);
 
@@ -169,9 +180,12 @@ const AddEditDelete = ({ editing }) => {
   return (
     <section>
       <div className="center top-button">
-        <a href="/" className="button is-warning">
+        {/* <a href="/" className="button is-warning">
           ← Go Back To Main Page
-        </a>
+        </a> */}
+        <Link to="/" className="button is-warning">
+          ← Go Back To Main Page
+        </Link>
       </div>
 
       {!articleContext.article ? (

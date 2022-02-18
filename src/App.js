@@ -44,10 +44,12 @@ function App() {
       },
     }).then(async (res) => {
       setUserContext((prev) => ({ ...prev, details: undefined, token: null }));
-
-      // redirect
+      setPath("/");
+      window.location.replace("http://localhost:3000");
     });
   };
+
+  const [path, setPath] = useState("/");
 
   return (
     <div className="App">
@@ -68,10 +70,13 @@ function App() {
       </nav>
 
       <Routes>
-        <Route path="/" element={<Home token={userContext.token} />} />
+        <Route
+          path="/"
+          element={<Home token={userContext.token} setPath={setPath} />}
+        />
         <Route path="/view-article/:_id" element={<ViewArticle />} />
 
-        <Route path="/login" element={<AuthPage />} />
+        <Route path="/login" element={<AuthPage path={path} />} />
 
         <Route
           path="/add-article"

@@ -3,7 +3,7 @@ import React from "react";
 import Login from "./each-auth-component/Login";
 import Signup from "./each-auth-component/Signup";
 
-const AuthPage = () => {
+const AuthPage = ({ path }) => {
   return (
     <>
       <div className="center top-button">
@@ -11,7 +11,7 @@ const AuthPage = () => {
           ← Go Back To Main Page
         </a>
       </div>
-      <Login />
+      <Login path={path} />
       <Signup />
     </>
   );

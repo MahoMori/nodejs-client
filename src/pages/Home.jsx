@@ -3,9 +3,8 @@ import { HeartSpinner } from "react-spinners-kit";
 import { Link } from "react-router-dom";
 
 import { ArticleContext } from "../context/ArticleContext";
-import { UserContext } from "../context/UserContext";
 
-const Home = ({ token }) => {
+const Home = ({ token, setPath }) => {
   const [articleContext, setArticleContext] = useContext(ArticleContext);
   const [loading, setLoading] = useState(false);
 
@@ -36,43 +35,19 @@ const Home = ({ token }) => {
     fetchArticles();
   }, []);
 
-  // check if user is logged in
-  // const [userContext, setUserContext] = useContext(UserContext);
-
-  // const verifyUser = useCallback(() => {
-  //   fetch(process.env.REACT_APP_BACKEND_ENDPOINT + "users/refreshtoken", {
-  //     method: "POST",
-  //     credentials: "include",
-  //     header: { "Content-Type": "application/json" },
-  //   }).then(async (res) => {
-  //     if (res.ok) {
-  //       const data = await res.json();
-  //       setUserContext((prev) => ({ ...prev, token: data.token }));
-  //     } else {
-  //       setUserContext((prev) => ({ ...prev, token: null }));
-  //     }
-
-  //     // check every 5 min
-  //     setTimeout(verifyUser, 5 * 30 * 1000);
-  //   });
-  // }, [setUserContext]);
-
-  // useEffect(() => verifyUser(), [verifyUser]);
-
   return (
     <section>
       <div className="center">
-        <a
-          href="/add-article"
+        <Link
+          to={token === null ? "/login" : "/add-article"}
           className="button is-primary is-light"
+          onClick={() => setPath("add-article")}
         >
           + Add New
-        </a>
+        </Link>
       </div>
 
       <div className="container">
-        {/* <% if(articles.length > 0) { const reversed = articles.reverse() %> */}
-
         {!articleContext.articles ? (
           <div className="container spinner-center">
             <HeartSpinner size={60} color="#ff7f50" loading={loading} />
@@ -103,22 +78,10 @@ const Home = ({ token }) => {
                       : `/edit-delete-article/${article._id}`
                   }
                   className="button is-light"
+                  onClick={() => setPath(`edit-delete-article/${article._id}`)}
                 >
                   Edit
                 </Link>
-
-                {/* <a
-                  href={`/view-article/${article._id}`}
-                  className="button is-text"
-                >
-                  Read more
-                </a>
-                <a
-                  href={`/edit-delete-article/${article._id}`}
-                  className="button is-light"
-                >
-                  Edit
-                </a> */}
               </div>
             </div>
           ))
