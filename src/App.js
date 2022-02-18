@@ -1,6 +1,5 @@
 import { useCallback, useState, useContext, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import { HeartSpinner } from "react-spinners-kit";
 
 import "./App.css";
 

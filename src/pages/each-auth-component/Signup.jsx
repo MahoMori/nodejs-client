@@ -6,14 +6,12 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
 
   const [userContext, setUserContext] = useContext(UserContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setIsSubmitting(true)
     setError("");
 
     fetch(process.env.REACT_APP_BACKEND_ENDPOINT + "users/signup", {
@@ -25,7 +23,6 @@ const Signup = () => {
       credentials: "include",
     })
       .then(async (res) => {
-        // setIsSubmitting(false)
         if (!res.ok) {
           if (res.status === 401) {
             setError("Invalid inputs");
@@ -45,11 +42,10 @@ const Signup = () => {
         } else {
           const data = await res.json();
           setUserContext((prev) => ({ ...prev, token: data.token }));
-          console.log("signup successful");
+          console.log(userContext);
         }
       })
       .catch((err) => {
-        // setIsSubmitting(false);
         setError("Something went wrong. Please try again");
       });
   };

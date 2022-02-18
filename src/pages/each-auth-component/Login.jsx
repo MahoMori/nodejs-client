@@ -30,6 +30,7 @@ const Login = ({ path }) => {
         } else {
           const data = await res.json();
           setUserContext((prev) => ({ ...prev, token: data.token }));
+          console.log(userContext);
 
           // redirect
           if (path === "/") {
@@ -37,7 +38,6 @@ const Login = ({ path }) => {
           } else {
             window.location.replace(`http://localhost:3000/${path}`);
           }
-          // window.location.replace()
         }
       })
       .catch((err) => {
