@@ -37,12 +37,10 @@ const Login = ({ path }) => {
             window.history.back();
           } else {
             // window.location.replace(`http://localhost:3000/${path}`);
-            console.log(path);
-            const currentHref = window.location.href;
-            const newHref = currentHref.replace("login", path);
             window.location.replace(
               // `https://nodejs-giraff-blog.netlify.app/${path}`
-              newHref
+            window.history.back();
+
             );
           }
         }
