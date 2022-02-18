@@ -44,7 +44,8 @@ function App() {
     }).then(async (res) => {
       setUserContext((prev) => ({ ...prev, details: undefined, token: null }));
       setPath("/");
-      window.location.replace("http://localhost:3000");
+      // window.location.replace(`http://localhost:3000`);
+      window.location.replace("https://nodejs-giraff-blog.netlify.app/");
     });
   };
 

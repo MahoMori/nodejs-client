@@ -36,7 +36,10 @@ const Login = ({ path }) => {
           if (path === "/") {
             window.history.back();
           } else {
-            window.location.replace(`http://localhost:3000/${path}`);
+            // window.location.replace(`http://localhost:3000/${path}`);
+            window.location.replace(
+              `https://nodejs-giraff-blog.netlify.app/${path}`
+            );
           }
         }
       })
