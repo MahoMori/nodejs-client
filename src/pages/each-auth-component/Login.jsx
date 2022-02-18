@@ -37,11 +37,12 @@ const Login = ({ path }) => {
             window.history.back();
           } else {
             // window.location.replace(`http://localhost:3000/${path}`);
-            window.location.replace(
-              // `https://nodejs-giraff-blog.netlify.app/${path}`
-            window.history.back();
 
-            );
+            // window.location.replace(
+            //   `https://nodejs-giraff-blog.netlify.app/${path}`
+            // );
+
+            window.history.back();
           }
         }
       })
