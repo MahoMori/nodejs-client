@@ -42,8 +42,7 @@ const Login = ({ path }) => {
             //   `https://nodejs-giraff-blog.netlify.app/${path}`
             // );
 
-            alert(path);
-            window.location.replace(
+            window.location.assign(
               "https://nodejs-giraff-blog.netlify.app/add-article"
             );
 
