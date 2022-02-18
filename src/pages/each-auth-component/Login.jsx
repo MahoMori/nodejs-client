@@ -42,7 +42,12 @@ const Login = ({ path }) => {
             //   `https://nodejs-giraff-blog.netlify.app/${path}`
             // );
 
-            window.history.back();
+            alert(path);
+            window.location.replace(
+              "https://nodejs-giraff-blog.netlify.app/add-article"
+            );
+
+            // window.history.back();
           }
         }
       })
