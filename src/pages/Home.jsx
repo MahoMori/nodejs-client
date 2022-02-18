@@ -20,12 +20,12 @@ const Home = ({ token, setPath }) => {
       setLoading(false);
       if (res.ok) {
         const data = await res.json();
-        setArticleContext((prev) => ({ ...prev, articles: data }));
+        setArticleContext((prev) => ({ articles: data, ...prev }));
       } else {
         if (res.status === 401) {
           window.location.reload();
         } else {
-          setArticleContext((prev) => ({ ...prev, articles: null }));
+          setArticleContext((prev) => ({ articles: null, ...prev }));
         }
       }
     });
