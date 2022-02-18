@@ -32,22 +32,18 @@ const Login = ({ path }) => {
           setUserContext((prev) => ({ ...prev, token: data.token }));
           console.log(userContext);
 
+          window.history.back();
+
           // redirect
-          if (path === "/") {
-            window.history.back();
-          } else {
-            // window.location.replace(`http://localhost:3000/${path}`);
+          // if (path === "/") {
+          //   window.history.back();
+          // } else {
+          //   window.location.replace(`http://localhost:3000/${path}`);
 
-            // window.location.replace(
-            //   `https://nodejs-giraff-blog.netlify.app/${path}`
-            // );
-
-            window.location.assign(
-              "https://nodejs-giraff-blog.netlify.app/add-article"
-            );
-
-            // window.history.back();
-          }
+          //   window.location.replace(
+          //     `https://nodejs-giraff-blog.netlify.app/${path}`
+          //   );
+          // }
         }
       })
       .catch((err) => {

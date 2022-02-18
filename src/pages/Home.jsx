@@ -60,9 +60,8 @@ const Home = ({ token, setPath }) => {
               <h3 className="title is-4">{article.title}</h3>
               <div>
                 {article.content.length > 200
-                  ? article.content.slice(0, 200)
+                  ? article.content.slice(0, 200) + "..."
                   : article.content}
-                ...
               </div>
 
               <div className="field is-grouped">

@@ -84,9 +84,9 @@ const ViewArticle = () => {
         setError("Something went wrong. Please try again");
       });
 
-    window.location.reload();
     setName("");
     setComment("");
+    window.history.back();
   };
 
   return (
